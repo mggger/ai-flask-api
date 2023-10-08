@@ -35,9 +35,11 @@ def fine_tuning_handler():
     file_content_base64 = data.get("content")
     file_content = base64.b64decode(file_content_base64)
 
+    n_epochs = data.get("n_epochs", None)
+
     logger.info("Received fine-tuning request")
 
-    ft = FineTuning()
+    ft = FineTuning(n_epochs)
     model_id = ft.run(file_content)
 
     logger.info(f"Fine-tuning completed. Model ID: {model_id}")

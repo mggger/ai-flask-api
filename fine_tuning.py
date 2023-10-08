@@ -4,7 +4,7 @@ import time
 import logging
 
 class FineTuning:
-    def __init__(self):
+    def __init__(self, n_epochs=None):
         import os
         openai.api_key = Config['openai_api_key']
         os.environ['OPENAI_API_KEY'] = Config['openai_api_key']
@@ -15,6 +15,8 @@ class FineTuning:
         # 设置日志记录器
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
+
+        self.n_epochs = n_epochs
 
     def run(self, content):
         file_id = self.upload_file(content)
@@ -35,11 +37,17 @@ class FineTuning:
 
     def create_model(self, file_id):
         self.logger.info("Creating fine-tuned model")
-
-        job = openai.FineTuningJob.create(
-            training_file=file_id,
-            model="gpt-3.5-turbo",
-        )
+        if self.n_epochs is not None:
+            job = openai.FineTuningJob.create(
+                training_file=file_id,
+                model="gpt-3.5-turbo",
+                hyperparameters={"n_epochs": self.n_epochs}
+            )
+        else:
+            job = openai.FineTuningJob.create(
+                training_file=file_id,
+                model="gpt-3.5-turbo",
+            )
 
         start_time = time.time()
         status = openai.FineTuningJob.retrieve(job.id).status
