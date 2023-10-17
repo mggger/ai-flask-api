@@ -44,7 +44,8 @@ app.layout = html.Div(
                             html.Label(
                                 media_file,
                                 id=media_file.split(".")[0],
-                                className="p-2 cursor-pointer hover:bg-gray-200"
+                                className="p-2 cursor-pointer hover:bg-gray-200",
+                                key=media_file
                             )
                             for media_file in media_files
                         ]
@@ -77,7 +78,7 @@ app.layout = html.Div(
     ]
 )
 
-inputs = (Input(media_file.split(".")[0], 'n_clicks') for media_file in media_files)
+inputs = (Input(media_file.split(".")[0], 'key') for media_file in media_files)
 
 @app.callback(
     [Output('transcript-display', 'children', allow_duplicate=True),
@@ -88,8 +89,8 @@ inputs = (Input(media_file.split(".")[0], 'n_clicks') for media_file in media_fi
 def update_media(*args):
     if (args[0]) is not None:
         global current_words_info
-
-        media_file = media_files[args[0] - 1]
+        app.logger.info(args)
+        media_file = args[0]
         transcript = transcripts[media_file]
 
         transcript_value = transcript['results']['channels'][0]['alternatives'][0]['transcript']
@@ -120,4 +121,4 @@ def alter_transcript(currentTime, current_word):
     return [current_word]
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host="0.0.0.0")
