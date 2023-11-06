@@ -20,3 +20,6 @@ jobs:
 
       - name: test
         run: python3 test.py
+
+      - name: deploy
+        run: python3 main.py
