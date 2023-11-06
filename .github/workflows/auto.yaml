@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main  # 或者你想要的分支名称
+          ref: plotly  # 或者你想要的分支名称
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt
