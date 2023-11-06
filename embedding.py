@@ -12,7 +12,7 @@ from embedchain.models.data_type import DataType
 from embedchain import App
 
 class EmbeddingTrainer:
-    def __init__(self):
+    def __init__(self, embedding_fn_model=None):
         # 配置OpenAI API密钥
         import os
         openai.api_key = Config['openai_api_key']
@@ -36,6 +36,7 @@ class EmbeddingTrainer:
                                  collection_name='default',
                                  provider=Providers.OPENAI,
                                  embedding_fn=EmbeddingFunctions.OPENAI,
+                                 embedding_fn_model=embedding_fn_model,
                                  chroma_settings=chroma_settings
                                  )
         self.bot = App(config)

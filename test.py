@@ -19,10 +19,29 @@ import base64
 
 
 
+import sys
+
 
 # data = {
-#     "question": "1+1=?",
-#     "model_id": "ft:gpt-3.5-turbo-0613:personal::87ELReW7"
+#     "question": "《深圳市住房公积金贷款管理规定》的链接是？"
 # }
 # r = requests.post("http://52.77.238.141:5000/chat", json=data)
-# print(r.text)
+# answer = r.json()['answer']
+# print(answer)
+
+
+#print(r.text.decode("utf-8"))
+
+
+
+# with open("/Users/home/Downloads/test.docx", 'rb') as f:
+#     content = f.read()
+#     encoded_content = base64.b64encode(content)
+#
+#
+data = {
+    "text": "1+1=2",
+    "model_id": "text-embedding-ada-002"
+}
+r = requests.post("http://52.77.238.141:5000/embeddings/train", json=data)
+print(r.text)

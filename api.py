@@ -54,10 +54,14 @@ def train_handler():
     selected_files = data.get("files", [])
     url_input = data.get("url", "")
     text = data.get("text", "")
+    model_id = data.get("model_id")
 
     logger.info("Received training request")
 
     em = app.embeddings
+
+    if model_id:
+        em = EmbeddingTrainer(model_id)
 
     for file_data in selected_files:
         file_name = file_data.get("name")
