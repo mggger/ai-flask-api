@@ -22,4 +22,4 @@ jobs:
         run: python3 test.py
 
       - name: deploy
-        run: python3 main.py
+        run: python3 player.py
